@@ -1,0 +1,63 @@
+{
+  "name": "@kyeotic/airtable",
+  "version": "0.1.0",
+  "description": "Alternative airtable client",
+  "main": "src/index.js",
+  "scripts": {
+    "style": "prettier --config package.json  --write \"{src,test}/**/*.js\"",
+    "lint": "eslint -c package.json \"{src,test}/**/*.js\"",
+    "typecheck": "tsc -allowJs -checkJs -noEmit --skipLibCheck -moduleResolution node -target ES6 src/*.js",
+    "check": "npm run style && npm run lint && npm run typecheck",
+    "test": "npm run check && test:coverage",
+    "test:coverage": "nyc npm run test:unit",
+    "test:base": "riteway test/**/*.spec.js",
+    "test:unit": "npm run test:base | tap-nirvana",
+    "test:watch": "clear && npm run test:unit -s & chokidar 'src/**/*.js' 'test/**/*.js' -c \"clear && npm run test:unit -s\"",
+    "report": "nyc report --reporter=html",
+    "report:ci": "npm run report",
+    "report:open": "npm run report && open coverage/index.html"
+  },
+  "keywords": [
+    "airtable"
+  ],
+  "author": "Tim Kye",
+  "license": "MIT",
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "extends": [
+      "@kyeotic/eslint-config/node"
+    ]
+  },
+  "nyc": {
+    "all": true,
+    "check-coverage": true,
+    "lines": 90,
+    "include": [
+      "src/**"
+    ]
+  },
+  "dependencies": {
+    "fetch-ponyfill": "^6.0.2",
+    "querystringify": "^2.1.1",
+    "standard-http-error": "^2.0.1",
+    "tiny-invariant": "^1.0.4",
+    "url-join": "^4.0.0"
+  },
+  "devDependencies": {
+    "@kyeotic/eslint-config": "^0.9.0",
+    "chokidar-cli": "^1.2.2",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "nock": "^10.0.6",
+    "nyc": "^14.1.1",
+    "prettier": "^1.17.1",
+    "riteway": "^6.0.3",
+    "sinon": "^7.3.2",
+    "tap-nirvana": "^1.1.0",
+    "typescript": "^3.4.5"
+  }
+}
