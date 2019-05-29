@@ -36,7 +36,3 @@ yarn-debug.log*
 yarn-error.log*
 .vscode/
 .nyc_output/
-
-tsconfig.json
-tsconfig.module.json
-tslint.json

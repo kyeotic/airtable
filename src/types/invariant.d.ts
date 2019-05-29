@@ -1,3 +1,4 @@
 declare module 'tiny-invariant' {
-  export default function invariant(condition: any, message?: string): void
+  export = invariant
+  function invariant(condition: any, message?: string): void
 }

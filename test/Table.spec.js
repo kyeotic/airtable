@@ -2,7 +2,13 @@
 
 const { describe, Try } = require('riteway')
 const { stub } = require('sinon')
-const { Table } = require('../build/module/lib/Table')
+const { Base } = require('../build/main/lib/Base')
+const { Table } = require('../build/main/lib/Table')
+
+const asBase = (base = {}) => {
+  base.__proto__ = Base.prototype
+  return base
+}
 
 describe('Table.ctor', async assert => {
   let should = 'throw'
@@ -23,7 +29,7 @@ describe('Table.ctor', async assert => {
     expected: '"base" is required'
   })
 
-  actual = Try(() => new Table({ query: {} })).toString()
+  actual = Try(() => new Table(asBase())).toString()
   assert({
     given: 'no tableName',
     should,
@@ -40,7 +46,7 @@ describe('Table.ctor', async assert => {
   })
 
   let given = 'valid table'
-  actual = Try(() => new Table({ query: {} }, 'test-table'))
+  actual = Try(() => new Table(asBase(), 'test-table'))
   assert({
     given,
     should: 'have no enumerable keys',
@@ -65,7 +71,7 @@ describe('Table.ctor', async assert => {
 
 describe('Table.query', async assert => {
   let query = { _: 'query' }
-  let base = { query: stub().returns(query) }
+  let base = asBase({ query: stub().returns(query) })
   let table = Try(() => new Table(base, 'test-table'))
 
   assert({
@@ -86,7 +92,7 @@ describe('Table.query', async assert => {
 
 describe('Table.get', async assert => {
   let method = { _: 'method' }
-  let base = { query: {}, get: stub().resolves(method) }
+  let base = asBase({ query: {}, get: stub().resolves(method) })
   let table = new Table(base, 'test-table')
 
   let actual = await Try(() => table.get(9))
@@ -107,7 +113,7 @@ describe('Table.get', async assert => {
 
 describe('Table.create', async assert => {
   let method = { _: 'method' }
-  let base = { query: {}, create: stub().resolves(method) }
+  let base = asBase({ query: {}, create: stub().resolves(method) })
   let table = new Table(base, 'test-table')
 
   let actual = await Try(() => table.create({ name: 'test' }))
@@ -128,7 +134,7 @@ describe('Table.create', async assert => {
 
 describe('Table.update', async assert => {
   let method = { _: 'method' }
-  let base = { query: {}, update: stub().resolves(method) }
+  let base = asBase({ query: {}, update: stub().resolves(method) })
   let table = new Table(base, 'test-table')
 
   let actual = await Try(() => table.update({ name: 'test' }, { merge: true }))
@@ -164,7 +170,7 @@ describe('Table.update', async assert => {
 
 describe('Table.delete', async assert => {
   let method = { _: 'method' }
-  let base = { query: {}, delete: stub().resolves(method) }
+  let base = asBase({ query: {}, delete: stub().resolves(method) })
   let table = new Table(base, 'test-table')
 
   let actual = await Try(() => table.delete(9))

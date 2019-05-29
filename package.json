@@ -2,7 +2,9 @@
   "name": "@kyeotic/airtable",
   "version": "0.1.0",
   "description": "Alternative airtable client",
-  "main": "src/index.js",
+  "main": "build/main/index.js",
+  "typings": "build/main/index.d.ts",
+  "module": "build/module/index.js",
   "scripts": {
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "build": "run-s clean && run-p build:*",
@@ -18,9 +20,9 @@
     "doc:html": "typedoc src/ --exclude **/*.spec.ts --target ES6 --excludePrivate  --excludeNotExported --mode file --out build/docs",
     "test": "npm run check && test:coverage",
     "test:coverage": "nyc npm run test:unit",
-    "test:base": "npm run build:module && node -r @babel/register -r @babel/polyfill riteway test/**/*.spec.js",
+    "test:base": "npm run build:main && riteway test/**/*.spec.js",
     "test:unit": "npm run test:base | tap-nirvana",
-    "test:watch": "clear && npm run test:unit -s & chokidar 'src/**/*.js' 'test/**/*.js' -c \"clear && npm run test:unit -s\"",
+    "test:watch": "clear && npm run test:unit -s & chokidar 'src/**/*.ts' 'test/**/*.js' -c \"clear && npm run test:unit -s\"",
     "report": "nyc report --reporter=html",
     "report:ci": "npm run report",
     "report:open": "npm run report && open coverage/index.html"
@@ -55,8 +57,6 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
     "@kyeotic/tslint-config": "^1.1.0",

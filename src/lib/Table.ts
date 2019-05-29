@@ -31,7 +31,7 @@ export class Table {
   /**
    * Fetch a Record
    */
-  public async get(recordId: string): Promise<Record> {
+  public async get(recordId: string): Promise<Record | null> {
     return this[_base].get(this[_tableName], recordId)
   }
 

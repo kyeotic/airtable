@@ -2,8 +2,14 @@
 
 const { describe, Try } = require('riteway')
 const { stub } = require('sinon')
-const { Base } = require('../build/module/lib/Base')
-const { Table } = require('../build/module/lib/Table')
+const { Client } = require('../build/main/lib/Client')
+const { Base } = require('../build/main/lib/Base')
+const { Table } = require('../build/main/lib/Table')
+
+const asClient = (base = {}) => {
+  base.__proto__ = Client.prototype
+  return base
+}
 
 describe('Base.ctor', async assert => {
   let should = 'throw'
@@ -24,7 +30,7 @@ describe('Base.ctor', async assert => {
     expected: '"client" is required'
   })
 
-  actual = Try(() => new Base({ query: {} })).toString()
+  actual = Try(() => new Base(asClient())).toString()
   assert({
     given: 'no baseId',
     should,
@@ -66,7 +72,7 @@ describe('Base.ctor', async assert => {
 
 describe('Base.table', async assert => {
   let query = { _: 'query' }
-  let client = { query: stub().returns(query) }
+  let client = asClient({ query: stub().returns(query) })
   let base = Try(() => new Base(client, 'test-base'))
   let actual = base.table('test-table') instanceof Table
   assert({
@@ -79,7 +85,7 @@ describe('Base.table', async assert => {
 
 describe('Base.query', async assert => {
   let query = { _: 'query' }
-  let client = { query: stub().returns(query) }
+  let client = asClient({ query: stub().returns(query) })
   let base = Try(() => new Base(client, 'test-base'))
 
   assert({
@@ -100,7 +106,7 @@ describe('Base.query', async assert => {
 
 describe('Base.get', async assert => {
   let method = { _: 'method' }
-  let client = { query: {}, get: stub().resolves(method) }
+  let client = asClient({ query: {}, get: stub().resolves(method) })
   let base = new Base(client, 'test-base')
 
   let actual = await Try(() => base.get('test-table', 9))
@@ -121,7 +127,7 @@ describe('Base.get', async assert => {
 
 describe('Base.create', async assert => {
   let method = { _: 'method' }
-  let client = { query: {}, create: stub().resolves(method) }
+  let client = asClient({ query: {}, create: stub().resolves(method) })
   let base = new Base(client, 'test-base')
 
   let actual = await Try(() => base.create('test-table', { name: 'test' }))
@@ -142,7 +148,7 @@ describe('Base.create', async assert => {
 
 describe('Base.update', async assert => {
   let method = { _: 'method' }
-  let client = { query: {}, update: stub().resolves(method) }
+  let client = asClient({ query: {}, update: stub().resolves(method) })
   let base = new Base(client, 'test-base')
 
   let actual = await Try(() =>
@@ -180,7 +186,7 @@ describe('Base.update', async assert => {
 
 describe('Base.delete', async assert => {
   let method = { _: 'method' }
-  let client = { query: {}, delete: stub().resolves(method) }
+  let client = asClient({ query: {}, delete: stub().resolves(method) })
   let base = new Base(client, 'test-base')
 
   let actual = await Try(() => base.delete('test-table', 9))

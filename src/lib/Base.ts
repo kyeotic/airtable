@@ -37,7 +37,10 @@ export class Base {
   /**
    * Fetch a Record
    */
-  public async get(tableName: string, recordId: string): Promise<Record> {
+  public async get(
+    tableName: string,
+    recordId: string
+  ): Promise<Record | null> {
     return this[_client].get(this[_baseId], tableName, recordId)
   }
 

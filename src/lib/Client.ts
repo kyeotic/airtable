@@ -53,7 +53,7 @@ export class Client {
     baseId: string,
     tableName: string,
     recordId: string
-  ): Promise<Record> {
+  ): Promise<Record | null> {
     try {
       return await this.request({
         url: join(baseId, tableName, recordId)
