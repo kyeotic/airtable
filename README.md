@@ -54,4 +54,4 @@ await myTable.delete(recordId)
 
 # API
 
-The docs are hosted here
+The Typedoc generated docs are hosted [here](https://kyeotic.github.io/airtable/)
