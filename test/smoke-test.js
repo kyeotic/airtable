@@ -1,7 +1,7 @@
 'use strict'
 
 require('dotenv').config()
-const { Client } = require('../src/Client')
+const { Client } = require('../build/module/lib/Client')
 let client = new Client({ apiKey: process.env.AIRTABLE_KEY })
 let baseId = process.env.AIRTABLE_BASE_ID
 let tableName = process.env.AIRTABLE_TABLE_NAME

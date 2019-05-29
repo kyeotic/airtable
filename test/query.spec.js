@@ -2,7 +2,7 @@
 
 const { describe, Try } = require('riteway')
 const { stub } = require('sinon')
-const { createQuery } = require('../src/query')
+const { createQuery } = require('../build/module/lib/query')
 
 describe('query()', async assert => {
   let client = { request: stub() }

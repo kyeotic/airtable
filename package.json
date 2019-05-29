@@ -4,13 +4,21 @@
   "description": "Alternative airtable client",
   "main": "src/index.js",
   "scripts": {
+    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
+    "build": "run-s clean && run-p build:*",
+    "build:main": "tsc -p tsconfig.json",
+    "build:module": "tsc -p tsconfig.module.json",
+    "clean": "rimraf build",
+    "fix:style": "npm run fix:tslint && npm run fix:prettier",
+    "fix:prettier": "prettier \"src/**/*.ts\" --write",
+    "fix:tslint": "tslint --fix --project .",
     "style": "prettier --config package.json  --write \"{src,test}/**/*.js\"",
-    "lint": "eslint -c package.json \"{src,test}/**/*.js\"",
-    "typecheck": "tsc -allowJs -checkJs -noEmit --skipLibCheck -moduleResolution node -target ES6 src/*.js",
-    "check": "npm run style && npm run lint && npm run typecheck",
+    "lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
+    "check": "npm run style && npm run lint",
+    "doc:html": "typedoc src/ --exclude **/*.spec.ts --target ES6 --excludePrivate  --excludeNotExported --mode file --out build/docs",
     "test": "npm run check && test:coverage",
     "test:coverage": "nyc npm run test:unit",
-    "test:base": "riteway test/**/*.spec.js",
+    "test:base": "npm run build:module && node -r @babel/register -r @babel/polyfill riteway test/**/*.spec.js",
     "test:unit": "npm run test:base | tap-nirvana",
     "test:watch": "clear && npm run test:unit -s & chokidar 'src/**/*.js' 'test/**/*.js' -c \"clear && npm run test:unit -s\"",
     "report": "nyc report --reporter=html",
@@ -27,20 +35,19 @@
     "semi": false,
     "singleQuote": true
   },
-  "eslintConfig": {
-    "extends": [
-      "@kyeotic/eslint-config/node"
-    ]
-  },
   "nyc": {
     "all": true,
     "check-coverage": true,
     "lines": 90,
     "include": [
       "src/**"
+    ],
+    "exclude": [
+      "**/*.spec.js"
     ]
   },
   "dependencies": {
+    "@types/standard-http-error": "^2.0.0",
     "fetch-ponyfill": "^6.0.2",
     "querystringify": "^2.1.1",
     "standard-http-error": "^2.0.1",
@@ -48,16 +55,25 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@kyeotic/eslint-config": "^0.9.0",
+    "@babel/core": "^7.4.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "@kyeotic/tslint-config": "^1.1.0",
     "chokidar-cli": "^1.2.2",
     "dotenv": "^8.0.0",
-    "eslint": "^5.16.0",
     "nock": "^10.0.6",
+    "npm-run-all": "^4.1.5",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
+    "rimraf": "^2.6.3",
     "riteway": "^6.0.3",
     "sinon": "^7.3.2",
     "tap-nirvana": "^1.1.0",
+    "tslint": "^5.16.0",
+    "tslint-config": "0.0.1",
+    "tslint-config-standard": "^8.0.1",
+    "typedoc": "^0.14.2",
     "typescript": "^3.4.5"
   }
 }

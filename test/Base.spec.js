@@ -2,8 +2,8 @@
 
 const { describe, Try } = require('riteway')
 const { stub } = require('sinon')
-const { Base } = require('../src/Base')
-const { Table } = require('../src/Table')
+const { Base } = require('../build/module/lib/Base')
+const { Table } = require('../build/module/lib/Table')
 
 describe('Base.ctor', async assert => {
   let should = 'throw'
