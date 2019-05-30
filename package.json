@@ -9,6 +9,7 @@
     "dist/"
   ],
   "scripts": {
+    "size": "size-limit",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
@@ -35,22 +36,6 @@
   ],
   "author": "Tim Kye",
   "license": "MIT",
-  "prettier": {
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true
-  },
-  "nyc": {
-    "all": true,
-    "check-coverage": true,
-    "lines": 90,
-    "include": [
-      "src/**"
-    ],
-    "exclude": [
-      "**/*.spec.js"
-    ]
-  },
   "dependencies": {
     "@types/standard-http-error": "^2.0.0",
     "fetch-ponyfill": "^6.0.2",
@@ -70,11 +55,33 @@
     "rimraf": "^2.6.3",
     "riteway": "^6.0.3",
     "sinon": "^7.3.2",
+    "size-limit": "^1.3.5",
     "tap-nirvana": "^1.1.0",
     "tslint": "^5.16.0",
     "tslint-config": "0.0.1",
     "tslint-config-standard": "^8.0.1",
     "typedoc": "^0.14.2",
     "typescript": "^3.4.5"
-  }
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  },
+  "nyc": {
+    "all": true,
+    "check-coverage": true,
+    "lines": 90,
+    "include": [
+      "src/**"
+    ],
+    "exclude": [
+      "**/*.spec.js"
+    ]
+  },
+  "size-limit": [
+    {
+      "path": "dist/main/index.js"
+    }
+  ]
 }
