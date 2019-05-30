@@ -2,15 +2,18 @@
   "name": "@kyeotic/airtable",
   "version": "0.1.0",
   "description": "Alternative airtable client",
-  "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
-  "module": "build/module/index.js",
+  "main": "dist/main/index.js",
+  "typings": "dist/main/index.d.ts",
+  "module": "dist/module/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
-    "clean": "rimraf build",
+    "clean": "rimraf dist",
     "fix:style": "npm run fix:tslint && npm run fix:prettier",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
@@ -57,8 +60,6 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.4.4",
     "@kyeotic/tslint-config": "^1.1.0",
     "chokidar-cli": "^1.2.2",
     "dotenv": "^8.0.0",
