@@ -21,7 +21,7 @@
     "style": "prettier --config package.json  --write \"{src,test}/**/*.js\"",
     "lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
     "check": "npm run style && npm run lint",
-    "doc:html": "rimraf docs && typedoc src/ --exclude **/*.spec.ts --target ES6 --excludePrivate  --excludeNotExported --mode file --out docs",
+    "doc:html": "rimraf docs && typedoc src/ --exclude **/*.spec.ts --target ES6 --excludePrivate --mode file --out docs",
     "test": "npm run check && test:coverage",
     "test:coverage": "nyc npm run test:unit",
     "test:base": "npm run build:main && riteway test/**/*.spec.js",
