@@ -2,7 +2,7 @@ import HttpError from 'standard-http-error'
 import join from 'url-join'
 import { Base } from './Base'
 import { fetch, invariant } from './lib'
-import { createQuery, QueryParams } from './query'
+import { createQuery, QueryParams, Query } from './query'
 
 const apiDefault = 'https://api.airtable.com/v0'
 const _apiKey = Symbol('_apiKey') // tslint:disable-line:variable-name
@@ -38,7 +38,7 @@ export class Client {
   /**
    * Create a query
    */
-  public query(baseId: string, tableName: string, params: QueryParams) {
+  public query(baseId: string, tableName: string, params: QueryParams): Query {
     return createQuery(
       this,
       join(baseId, encodeURIComponent(tableName)),

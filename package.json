@@ -21,8 +21,8 @@
     "style": "prettier --config package.json  --write \"{src,test}/**/*.js\"",
     "lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
     "check": "npm run style && npm run lint",
-    "doc:html": "rimraf docs && typedoc src/ --exclude **/*.spec.ts --target ES6 --excludePrivate --mode file --out docs",
-    "test": "npm run check && test:coverage",
+    "doc:html": "rimraf docs && typedoc src/ --exclude **/*.spec.ts --target ES6 --excludePrivate --excludeNotExported --mode file --out docs",
+    "test": "npm run check && npm run test:coverage",
     "test:coverage": "nyc npm run test:unit",
     "test:base": "npm run build:main && riteway test/**/*.spec.js",
     "test:unit": "npm run test:base | tap-nirvana",
@@ -61,6 +61,7 @@
     "tslint-config": "0.0.1",
     "tslint-config-standard": "^8.0.1",
     "typedoc": "^0.14.2",
+    "typedoc-twilio-theme": "^1.0.0",
     "typescript": "^3.4.5"
   },
   "prettier": {

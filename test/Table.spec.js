@@ -2,8 +2,8 @@
 
 const { describe, Try } = require('riteway')
 const { stub } = require('sinon')
-const { Base } = require('../build/main/lib/Base')
-const { Table } = require('../build/main/lib/Table')
+const { Base } = require('../dist/main/lib/Base')
+const { Table } = require('../dist/main/lib/Table')
 
 const asBase = (base = {}) => {
   base.__proto__ = Base.prototype

@@ -1,4 +1,4 @@
 export * from './lib/Client'
 export * from './lib/Base'
 export * from './lib/Table'
-export { createQuery } from './lib/query'
+export { Query, QueryParams, Page } from './lib/query'

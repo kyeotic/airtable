@@ -3,8 +3,8 @@
 const { describe, Try } = require('riteway')
 const { stub } = require('sinon')
 const nock = require('nock')
-const { Client } = require('../build/main/lib/Client')
-const { Base } = require('../build/main/lib/Base')
+const { Client } = require('../dist/main/lib/Client')
+const { Base } = require('../dist/main/lib/Base')
 
 describe('Client.ctor', async assert => {
   let should = 'throw'
